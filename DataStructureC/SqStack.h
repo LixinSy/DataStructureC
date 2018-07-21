@@ -4,7 +4,7 @@
 #define TRUE 1
 #define FLASE 0
 #define STACK_INIT_SIZE 100
-#define STACKINCREMENT 10
+#define STACK_INCREMENT 10
 #define ElemType struct TreeNode*
 
 #ifndef SQ_STACK_H

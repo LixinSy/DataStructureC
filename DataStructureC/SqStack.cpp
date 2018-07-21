@@ -85,13 +85,13 @@ void Push(SqStack *S, ElemType e)  //Ñ¹ÈëÕ»
 {
 	if (StackFull(*S))
 	{
-		S->base = (ElemType *)realloc(S->base, sizeof(ElemType)*(S->stacksize + STACKINCREMENT));
+		S->base = (ElemType *)realloc(S->base, sizeof(ElemType)*(S->stacksize + STACK_INCREMENT));
 		if (!S->base)
 		{
 			exit(2);
 		}
 		S->top = S->stacksize + S->base;
-		S->stacksize += STACKINCREMENT;
+		S->stacksize += STACK_INCREMENT;
 	}
 	S->top++;
 	*(S->top) = e;
