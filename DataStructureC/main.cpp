@@ -1,7 +1,7 @@
 
 #include<stdio.h>
 #include <stdlib.h>
-#include "SqList.h"
+#include "LinkList.h"
 
 void visit(int e){
 	printf("%d ", e);
@@ -10,17 +10,18 @@ void visit(int e){
 int main(int argc, char * argv[])
 {
 	int n;
-	SqList l ;
-	InitList(&l);
+	LinkList la , lb, lc;
+	InitList(&la);
+	
 	for (int i = 0; i < 5;i++)
-		ListInsert(&l, i+1, i+1);
-	printf("%d\n", l.length);
-	ListTraverse(l, visit);
+		ListInsert(&la, i+1, i+1);
+	ListTraverse(la, visit);
 
+	ListInsert(&la, la.length, 9);
+	ListTraverse(la, visit);
+	DestroyList(&la);
 
-
-	DestroyList(&l);
-	printf("\n");
+	printf("%d", la.length);
 	system("pause");
 	return 0;
 }

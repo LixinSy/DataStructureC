@@ -2,25 +2,11 @@
 #ifndef SQ_LIST_H
 #define SQ_LIST_H
 
+#include "macro.h"
 
-	#define ElemType int
-
-	#ifndef LIST_INIT_SIZE
-	#define LIST_INIT_SIZE 100
-	#endif
-
-	#ifndef LIST_INCREMENT
-	#define LIST_INCREMENT 10
-	#endif
-
-#define  TRUE			1
-#define  FALSE			0
-#define  OK				1
-#define  ERROR			-1
-#define  INFEASIBLE		-1
-#define  OVERFLOW		-2
-
-typedef   int  Status;
+#define ElemType int
+#define LIST_INIT_SIZE 100
+#define LIST_INCREMENT 10
 
 //定义顺序表
 typedef struct
@@ -53,12 +39,16 @@ void Union(SqList *La, SqList Lb);
 /*已知la和lb的元素按非递减排列
  *归并la和lb到lc，lc也按非递减排列
 */
-void MergeList(SqList La, SqList Lb, SqList &Lc);
+void MergeList(SqList La, SqList Lb, SqList *Lc);
+
+/*删除表中所有值为x的元素
+时间复杂度O(n), 空间复杂度O(1)*/
+void DeleteElem(SqList *L, ElemType x);
 
 /*删除表中所有值大于mink且小于maxk的元素*/
 Status DeleteBetween_min_max(SqList *L, ElemType mink, ElemType maxk);    
 
-//删除表中所有值相同的多余元素*/
+/*删除表中所有值相同的多余元素*/
 void DeleteEqualElem(SqList *L); 
 
 #endif

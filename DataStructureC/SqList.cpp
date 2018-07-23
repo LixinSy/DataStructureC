@@ -1,8 +1,6 @@
 
-#include <stdio.h>
-#include <stdlib.h>
-#include "SqList.h"
 
+#include "SqList.h"
 
 
 //初始化一个顺序表
@@ -94,6 +92,8 @@ Status ListTraverse(SqList L, void(*visit)(ElemType))
 	{
 		visit(*(L.list + i));
 	}
+	printf("\n");
+	return OK;
 }
 //返回L第i（i>=1）个元素，下标为i-1
 Status GetElem(SqList L, int i, ElemType *e)
@@ -173,14 +173,62 @@ void Union(SqList *La, SqList Lb)
 	for (int i = 1; i <= Lb_len; i++){
 		GetElem(Lb, i, &e);
 		if (!LocateElem(*La, e, equal))
-			ListInsert(La, La_len, e);
+			ListInsert(La, ++La_len, e);
 	}
 }
 
 /*已知la和lb的元素按非递减排列
-*归并la和lb到lc，lc也按非递减排列
+ 归并la和lb到lc，lc也按非递减排列
 */
-void MergeList(SqList La, SqList Lb, SqList &Lc)
+void MergeList(SqList La, SqList Lb, SqList *Lc)
 {
 
+	int la_len = ListLength(La);
+	int lb_len = ListLength(Lb);
+	int i = 1, j = 1, k = 1;
+	ElemType ea, eb;
+	for (; i <= la_len && j <= lb_len; k++){
+		GetElem(La, i, &ea);
+		GetElem(Lb, j, &eb);
+		if (ea < eb){
+			ListInsert(Lc, k, ea);
+			i++;
+		}
+		else{
+			ListInsert(Lc, k, eb);
+			j++;
+		}
+	}
+	while (i <= la_len)
+	{
+		GetElem(La, i, &ea);
+		ListInsert(Lc, k, ea);
+		k++;
+		i++;
+	}
+	while (j <= lb_len)
+	{
+		GetElem(Lb, j, &eb);
+		ListInsert(Lc, k, eb);
+		k++;
+		j++;
+	}
+}
+
+/*删除表中所有值为x的元素
+时间复杂度O(n), 空间复杂度O(1)*/
+void DeleteElem(SqList *L, ElemType x){
+	int len = ListLength(*L);
+	int delNum = 0;
+	ElemType e;
+	for (int i = 0; i < len; i++){
+		e = *(L->list + i);
+		if (e == x ){
+			delNum++;
+		}
+		else if (delNum > 0){
+			*(L->list + i - delNum) = *(L->list + i);
+		}
+	}
+	L->length -= delNum;
 }

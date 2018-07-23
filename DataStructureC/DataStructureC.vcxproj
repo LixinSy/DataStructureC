@@ -64,16 +64,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="LinkList.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="SqList.cpp" />
     <ClCompile Include="SqQueue.cpp" />
     <ClCompile Include="SqStack.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="LinkList.h" />
     <ClInclude Include="SqList.h" />
     <ClInclude Include="SqQueue.h" />
     <ClInclude Include="SqStack.h" />
-    <ClInclude Include="user.h" />
+    <ClInclude Include="macro.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

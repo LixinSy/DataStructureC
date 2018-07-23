@@ -27,6 +27,9 @@
     <ClCompile Include="SqList.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="LinkList.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SqQueue.h">
@@ -35,10 +38,13 @@
     <ClInclude Include="SqStack.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="SqList.h">
+    <ClInclude Include="LinkList.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="user.h">
+    <ClInclude Include="macro.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SqList.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
