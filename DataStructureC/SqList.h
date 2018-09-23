@@ -26,10 +26,11 @@ int ListLength(SqList L); //返回L的元素个数
 Status GetElem(SqList L, int i, ElemType *e); //返回L第i（i>=1）个元素，下标为i-1
 Status ListInsert(SqList *L, int i, ElemType e); //插入第i个元素，下标为i-1
 Status ListDelete(SqList *L, int i, ElemType* e);//删除第i个元素， 下标为i-1，, 用e返回
-Status ListTraverse(SqList L, void(*visit)(ElemType)); //遍历顺序表
+Status ListTraverse(SqList L, Status(*visit)(ElemType)); //遍历顺序表
 Status NextElem(SqList L, ElemType cur_e, ElemType *next_e); //返回cur_e的后继
 Status PriorElem(SqList L, ElemType cur_e, ElemType *pre_e); //返回cur_e的前驱
 int LocateElem(SqList L, ElemType e, bool (*func)(ElemType, ElemType));//判断e和L的元素的关系
+int BinarySearch(SqList L, ElemType key);//折半查找
 
 //------------------------------- 算法 -------------------------------
 

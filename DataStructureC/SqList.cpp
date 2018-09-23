@@ -83,7 +83,7 @@ Status ListDelete(SqList *L, int i, ElemType* e)
 	return OK;
 }
  //±È¿˙À≥–Ú±Ì
-Status ListTraverse(SqList L, void(*visit)(ElemType))
+Status ListTraverse(SqList L, Status(*visit)(ElemType))
 {
 	if (!L.list)
 		return INFEASIBLE;
@@ -153,6 +153,24 @@ int LocateElem(SqList L, ElemType e, bool (*func)(ElemType, ElemType))
 	return 0;
 }
 
+//’€∞Î≤È’“
+int BinarySearch(SqList L, ElemType key)
+{
+	ElemType e;
+	int low, high, mid;
+	low = 1, high = L.length;
+	while (low <= high){
+		mid = (low + high) / 2;
+		GetElem(L, mid, &e);
+		if (e == key)
+			return mid;
+		else if (key < e)
+			high = mid - 1;
+		else
+			low = mid + 1;
+	}
+	return 0;
+}
 
 //∏®÷˙∫Ø ˝
 bool equal(ElemType ea, ElemType eb){

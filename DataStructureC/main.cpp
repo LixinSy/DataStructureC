@@ -1,27 +1,32 @@
 
 #include<stdio.h>
 #include <stdlib.h>
-#include "LinkList.h"
+#include "SqList.h"
+#include "SqStack.h"
+#include "SqQueue.h"
+#include "BTree.h"
 
-void visit(int e){
+int v(int e){
 	printf("%d ", e);
+	return OK;
 }
 
 int main(int argc, char * argv[])
 {
 	int n;
-	LinkList la , lb, lc;
-	InitList(&la);
 	
-	for (int i = 0; i < 5;i++)
-		ListInsert(&la, i+1, i+1);
-	ListTraverse(la, visit);
+	SqList l;
+	InitList(&l);
 
-	ListInsert(&la, la.length, 9);
-	ListTraverse(la, visit);
-	DestroyList(&la);
-
-	printf("%d", la.length);
+	for (int i = 1; i <= 10; i++){
+		ListInsert(&l, i, i);
+	}
+	ListTraverse(l,v);
+	n = BinarySearch(l, 21);
+	printf("%d\n", n);
+	DestroyList(&l);
+	
 	system("pause");
 	return 0;
 }
+

@@ -1,66 +1,79 @@
 //SqQueue.cpp
-#include<stdlib.h>
+
 #include"SqQueue.h"
 
-void InitQueue(struct LinkQueue *Q) //构造队列
-{
-	Q->front = Q->rear = (struct QNode*)malloc(sizeof(struct QNode));
-	if (!Q->front)
-	{
-		exit(1);
-	}
-	(Q->front)->next = NULL;
-}
 
-void DestroyQueue(struct LinkQueue *Q) //销毁队列
+//构造新循环队列
+Status InitQueue(SqQueue *Q)
 {
-	struct QNode *p = Q->front, *t;
-	while (p)
-	{
-		t = p->next;
-		free(p);
-		p = t;
-	}
+	Q->base = (ElemType*)malloc(sizeof(ElemType)*MAX_SIZE);
+	if (!Q->base)
+		exit(ERROR);
+	Q->front = Q->rear = 0;
+	return OK;
 }
-
-void EnQueue(struct LinkQueue *Q, QElemType e) //入队
+//销毁队列
+Status DestroyQueue(SqQueue *Q)
 {
-	struct QNode *p = (struct QNode *)malloc(sizeof(struct QNode));
-	if (!p)
-	{
-		exit(1);
-	}
-	p->data = e;
-	p->next = NULL;
-	(Q->rear)->next = p;
-	Q->rear = p;
+	if (!Q->base)
+		return INFEASIBLE;
+	free(Q->base);
+	return OK;
 }
-
-void DeQueue(struct LinkQueue *Q, QElemType *e) //出队
+//清除队列
+Status ClearQueue(SqQueue *Q)
 {
-	struct QNode *p = NULL;
-	if (Q->front == Q->rear)
-	{
-		return;
-	}
-	p = (Q->front)->next;
-	*e = p->data;
-	(Q->front)->next = p->next;
-	if (Q->rear == p)
-	{
-		Q->rear = Q->front;
-	}
-	free(p);
+	if (!Q->base)
+		return INFEASIBLE;
+	Q->rear = Q->front = 0;
+	return OK;
 }
-
-int QueueEmpty(struct LinkQueue *Q) //是否为空
+//队列是否为空
+Status QueueEmpty(SqQueue Q)
 {
-	if (Q->front == Q->rear)
-	{
-		return 1;
-	}
+	if (Q.front == Q.rear) //循环队列空
+		return TRUE;
 	else
-	{
-		return 0;
+		return FALSE;
+}
+//循环队列长度，元素个数
+int QueueLength(SqQueue Q)
+{
+	return (Q.rear - Q.front + MAX_SIZE) % MAX_SIZE; //循环队列长度计算
+}
+//用e返回队头元素
+Status GetHead(SqQueue Q, ElemType *e)
+{
+	if (Q.front == Q.rear)
+		return INFEASIBLE;
+	*e = Q.base[Q.front];
+	return OK;
+}
+//入队
+Status EnQueue(SqQueue *Q, ElemType e)
+{
+	if ((Q->rear + 1) % MAX_SIZE == Q->front) //循环队列满
+		return ERROR;
+	Q->base[Q->rear] = e;
+	Q->rear = (Q->rear + 1) % MAX_SIZE;  //更新Q.rear
+	return OK;
+}
+//出队
+Status DeQueue(SqQueue *Q, ElemType *e)
+{
+	if (Q->front == Q->rear) //循环队列空
+		return ERROR;
+	*e = Q->base[Q->front];
+	Q->front = (Q->front + 1) % MAX_SIZE;  //更新Q.front
+	return OK;
+}
+//遍历队列
+Status QueueTraverce(SqQueue Q, void(*visit)(ElemType))
+{
+	int i = Q.front;
+	for (; i != Q.rear; i = (i+1) % MAX_SIZE){
+		visit(Q.base[i]);
 	}
+	printf("; %d个元素\n", (Q.rear - Q.front + MAX_SIZE) % MAX_SIZE);
+	return OK;
 }
