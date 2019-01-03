@@ -2,7 +2,7 @@
 #ifndef GRAPH_H
 #define GRAPH_H
 
-#define INFINITY INT_MAX
+#define INFINITY 60000
 #define VertexType int
 #define MAX_VERTEX_NUM 20
 

@@ -5,7 +5,7 @@
 #include "macro.h"
 #include "SqStack.h"
 
-#define TElemType char
+#define TElemType int
 
 /**************************** ¶ş²æÊ÷ ***************************/
 
@@ -19,8 +19,8 @@ typedef struct BTreeNode
 
 //¸÷º¯ÊıÉùÃ÷
 
-BTreeNode* CreateBitTree(); //Ç°Ğò¹¹Ôì¶ş²æÊ÷
-Status DestroyBitTree(BTreeNode *T); //Ïú»Ù¶ş²æÊ÷
+BTreeNode* CreateBitTree();										//²ã´Î¹¹Ôì¶ş²æÊ÷
+Status DestroyBitTree(BTreeNode *T);							//Ïú»Ù¶ş²æÊ÷
 Status PreOrderTraverse(BTreeNode *T, Status (*visit)(TElemType)); //µİ¹éÇ°Ğò±éÀú¶ş²æÊ÷
 Status InOrderTraverse(BTreeNode *T, Status(*visit)(TElemType)); //µİ¹éÖĞĞò±éÀú¶ş²æÊ÷
 Status PostOrderTraverse(BTreeNode *T, Status(*visit)(TElemType)); //µİ¹éºóĞò±éÀú¶ş²æÊ÷
@@ -29,6 +29,11 @@ Status RPreOrderTraverse(BTreeNode *T, Status(*visit)(TElemType)); //·Çµİ¹éÇ°Ğò±
 Status RInOrderTraverse(BTreeNode *T, Status(*visit)(TElemType)); //·Çµİ¹éÖĞĞò±éÀú¶ş²æÊ÷
 Status RPostOrderTraverse(BTreeNode *T, Status(*visit)(TElemType)); //·Çµİ¹éºóĞò±éÀú¶ş²æÊ÷
 Status RLevelorderTraverse(BTreeNode *T, Status(*visit)(TElemType)); //·Çµİ¹é²ã´Î±éÀú¶ş²æÊ÷
+int Deep(BTreeNode *T);											//Çó¶ş²æÊ÷µÄÉî¶È
+
+BTreeNode* CreateBitSortTree();									//¹¹Ôì¶ş²æÅÅĞòÊ÷
+
+
 
 /**************************** ÏßË÷¶ş²æÊ÷ ***************************/
 
@@ -47,6 +52,8 @@ typedef struct BiThrNode
 }BiThrNode;
 
 
+
+
 /**************************** Ê÷µÄË«Ç×±íÊ¾·¨ ***************************/
 
 #define MAX_TREE_SIZE 100
@@ -61,6 +68,10 @@ typedef struct		//Ê÷
 	PTNode nodes[MAX_TREE_SIZE];
 	int root, num;
 }PTree;
+
+
+
+
 
 /**************************** Ê÷µÄº¢×Ó±íÊ¾·¨ ***************************/
 
@@ -82,6 +93,9 @@ typedef struct //Ê÷
 	int root, num;
 }CTree;
 
+
+
+
 /**************************** Ê÷µÄº¢×ÓĞÖµÜ±íÊ¾·¨ ***************************/
 
 typedef struct CSNode  //Ê÷µÄ½áµã
@@ -90,6 +104,9 @@ typedef struct CSNode  //Ê÷µÄ½áµã
 	CSNode *firstChild;
 	CSNode *nextSibling;
 }CSNode;
+
+
+
 
 
 /**************************** ºÕ·òÂüÊ÷ºÍºÕ·òÂü±àÂëµÄ´æ´¢±íÊ¾ ***************************/

@@ -6,25 +6,50 @@
 #include "SqQueue.h"
 #include "BTree.h"
 
+#include<iostream>
+#include<string>
+#include<vector>
+#include<queue>
+#include<sstream>
+
+using namespace std;
+
 int v(int e){
-	printf("%d ", e);
+	printf("%d¡¢", e);
 	return OK;
 }
+
+vector<string> split(string str, char del){
+	vector<string> strs;
+	string word="";
+	bool flag = false;
+	for (int i = 0; i < str.size(); i++){
+		if (str[i] != del){
+			word.push_back(str[i]);
+			flag = true;
+		}
+		else if(str[i] == del && flag){
+			strs.push_back(word);
+			flag = false;
+			word = "";
+		}
+	}
+	if (flag){
+		strs.push_back(word);
+	}
+	return strs;
+}
+
 
 int main(int argc, char * argv[])
 {
 	int n;
 	
-	SqList l;
-	InitList(&l);
+	BTreeNode* t= CreateBitSortTree();
 
-	for (int i = 1; i <= 10; i++){
-		ListInsert(&l, i, i);
-	}
-	ListTraverse(l,v);
-	n = BinarySearch(l, 21);
-	printf("%d\n", n);
-	DestroyList(&l);
+	RPreOrderTraverse(t, v);
+
+	DestroyBitTree(t);
 	
 	system("pause");
 	return 0;

@@ -1,26 +1,90 @@
 //BTree.cpp Ö÷º¯Êı
 
 #include "BTree.h"
-#include <iostream>
+#include <stack>
+#include <queue>
+#include <string>
 
-//Ç°Ğò¹¹Ôì¶ş²æÊ÷,¿Õ¸ñÎª¿Õ½áµã
-BTreeNode* CreateBitTree() 
+//²ã´Î¹¹Ôì¶ş²æÊ÷
+BTreeNode* CreateBitTree()
 {
+	puts("²ã´ÎË³ĞòÊäÈë½Úµã£º");
 	TElemType e;
-	BTreeNode *p;
-	//std::cin>>e;
-	scanf_s("%c", &e);
-	if (e == ' ')
+	TElemType non = '#';
+	BTreeNode *T=NULL, *p = NULL, *l = NULL, *r = NULL;
+	std::queue<BTreeNode*> q;
+	e = getchar();
+	if (e == non)
 		return NULL;
 	else{
-		if (!(p = (BTreeNode *)malloc(sizeof(BTreeNode))))
+		if (!(T = (BTreeNode *)malloc(sizeof(BTreeNode))))
 			exit(ERROR);
-		p->data = e;
-		p->lchild = CreateBitTree();
-		p->rchild = CreateBitTree();
+		T->data = e;
+		q.push(T);
+		while (!q.empty()){
+
+			//×óº¢×Ó
+			e = getchar();
+			if (e == non)
+				l = NULL;
+			else{
+				if (!(l = (BTreeNode *)malloc(sizeof(BTreeNode))))
+					exit(ERROR);
+				l->data = e;
+				q.push(l);
+			}
+			//ÓÒº¢×Ó
+			e = getchar();
+			if (e == non)
+				r = NULL;
+			else{
+				if (!(r = (BTreeNode *)malloc(sizeof(BTreeNode))))
+					exit(ERROR);
+				r->data = e;
+				q.push(r);
+			}
+			p = q.front(); q.pop();
+			p->lchild = l;
+			p->rchild = r;
+		}
 	}
-	return p;
+	return T;
 }
+
+//¹¹Ôì¶ş²æÅÅĞòÊ÷
+BTreeNode* CreateBitSortTree()
+{
+	BTreeNode *T = NULL, *p = NULL, *pt = NULL, *newNode = NULL;
+	int val;
+	int arr[] = { 5, 7, 12, 4, 17, 2, 1, 10 };
+	std::vector<int> datas(arr, arr+8);
+	if (datas.size() == 0)
+		return NULL;
+	if (!(T = (BTreeNode *)malloc(sizeof(BTreeNode))))
+		exit(ERROR);
+	T->data = datas[0]; T->lchild = T->rchild = NULL;
+
+	for (int i = 1; i < datas.size(); i++){
+		val = datas[i];
+		if (!(newNode = (BTreeNode *)malloc(sizeof(BTreeNode))))
+			exit(ERROR);
+		newNode->data = val; newNode->lchild = newNode->rchild = NULL;
+		pt = T;
+		while (pt){
+			p = pt;
+			if (val < pt->data)
+				pt = pt->lchild;
+			else if (val > pt->data)
+				pt = pt->rchild;
+		}
+		if (val < p->data)
+			p->lchild = newNode;
+		else if (val > p->data)
+			p->rchild = newNode;
+	}
+	return T;
+}
+
 //×óÓÒ¸ùÏú»Ù¶ş²æÊ÷
 Status DestroyBitTree(BTreeNode *T)
 {
@@ -33,8 +97,8 @@ Status DestroyBitTree(BTreeNode *T)
 	}
 	return OK;
 }
-
-Status PreOrderTraverse(BTreeNode *T, Status(*visit)(TElemType)) //µİ¹éÇ°Ğò±éÀú¶ş²æÊ÷
+//µİ¹éÇ°Ğò±éÀú¶ş²æÊ÷
+Status PreOrderTraverse(BTreeNode *T, Status(*visit)(TElemType)) 
 {
 	if (T){
 		if (visit(T->data))
@@ -45,31 +109,106 @@ Status PreOrderTraverse(BTreeNode *T, Status(*visit)(TElemType)) //µİ¹éÇ°Ğò±éÀú¶
 	}
 	return OK;
 }
-Status InOrderTraverse(BTreeNode *T, Status(*visit)(TElemType)); //µİ¹éÖĞĞò±éÀú¶ş²æÊ÷
-Status PostOrderTraverse(BTreeNode *T, Status(*visit)(TElemType)); //µİ¹éºóĞò±éÀú¶ş²æÊ÷
-Status LevelorderTraverse(BTreeNode *T, Status(*visit)(TElemType)); //µİ¹é²ã´Î±éÀú¶ş²æÊ÷
-Status RPreOrderTraverse(BTreeNode *T, Status(*visit)(TElemType)); //·Çµİ¹éÇ°Ğò±éÀú¶ş²æÊ÷
-Status RInOrderTraverse(BTreeNode *T, Status(*visit)(TElemType)) //·Çµİ¹éÖĞĞò±éÀú¶ş²æÊ÷
+//µİ¹éÖĞĞò±éÀú¶ş²æÊ÷
+Status InOrderTraverse(BTreeNode *T, Status(*visit)(TElemType))
 {
-	/*
-	SqStack S;
+	if (T){
+		if (InOrderTraverse(T->lchild, visit))
+			if (visit(T->data))
+				if (InOrderTraverse(T->rchild, visit))
+					return OK;
+		return ERROR;
+	}
+	return OK;
+}
+
+//µİ¹éºóĞò±éÀú¶ş²æÊ÷
+Status PostOrderTraverse(BTreeNode *T, Status(*visit)(TElemType))
+{
+	if (T){
+		if (PostOrderTraverse(T->lchild, visit))
+			if (PostOrderTraverse(T->rchild, visit))
+				if (visit(T->data))
+					return OK;
+		return ERROR;
+	}
+	return OK;
+}
+
+Status LevelorderTraverse(BTreeNode *T, Status(*visit)(TElemType)); //µİ¹é²ã´Î±éÀú¶ş²æÊ÷
+
+//·Çµİ¹éÇ°Ğò±éÀú¶ş²æÊ÷
+Status RPreOrderTraverse(BTreeNode *T, Status(*visit)(TElemType))
+{
 	BTreeNode *p = T;
-	InitStack(&S);
-	while (p || !StackEmpty(S)){
+	std::stack<BTreeNode*> s;
+	while (p || !s.empty()){
 		if (p){
-			Push(&S, p);
+			if (!visit(p->data))
+				return ERROR;
+			s.push(p->rchild);
+			s.push(p->lchild);
+		}
+		p = s.top(); s.pop();
+	}
+	return OK;
+}
+//·Çµİ¹éÖĞĞò±éÀú¶ş²æÊ÷
+Status RInOrderTraverse(BTreeNode *T, Status(*visit)(TElemType))
+{
+	std::stack<BTreeNode *> S;
+	BTreeNode *p = T;
+
+	while (p || !S.empty()){
+		if (p){
+			S.push(p);
 			p = p->lchild;
 		}
 		else{
-			Pop(&S, &p);
+			p = S.top(); S.pop();
 			if (!visit(p->data))
 				return ERROR;
 			p = p->rchild;
 		}
 	}
-	DestroyStack(&S);
-	*/
 	return OK;
 }
-Status RPostOrderTraverse(BTreeNode *T, Status(*visit)(TElemType)); //·Çµİ¹éºóĞò±éÀú¶ş²æÊ÷
-Status RLevelorderTraverse(BTreeNode *T, Status(*visit)(TElemType)); //·Çµİ¹é²ã´Î±éÀú¶ş²æÊ÷
+
+
+Status RPostOrderTraverse(BTreeNode *T, Status(*visit)(TElemType)) //·Çµİ¹éºóĞò±éÀú¶ş²æÊ÷
+{
+
+	return OK;
+}
+
+//·Çµİ¹é²ã´Î±éÀú¶ş²æÊ÷
+Status RLevelorderTraverse(BTreeNode *T, Status(*visit)(TElemType))
+{
+	std::queue<BTreeNode*> q;
+	BTreeNode *p = NULL;
+	q.push(T);
+	while (!q.empty()){
+		p = q.front(); q.pop();
+		if (p){
+			if (!visit(p->data))
+				return ERROR;
+			q.push(p->lchild);
+			q.push(p->rchild);
+		}
+		else{
+			//putchar('#');
+		}
+	}
+	return OK;
+}
+//Çó¶ş²æÊ÷µÄÉî¶È
+int Deep(BTreeNode *T)
+{
+	int n;
+	if (!T)
+		return 0;
+	else{
+		n = Deep(T->lchild) > Deep(T->rchild) ? Deep(T->lchild) : Deep(T->rchild);
+		return n + 1;
+	}
+}
