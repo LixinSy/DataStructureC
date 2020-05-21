@@ -1,4 +1,3 @@
-
 #ifndef BIT_TREE_H
 #define BIT_TREE_H
 
@@ -6,6 +5,7 @@
 #include "SqStack.h"
 
 #define TElemType int
+#define MAX_TREE_SIZE 100
 
 /**************************** 二叉树 ***************************/
 
@@ -34,14 +34,12 @@ int Deep(BTreeNode *T);											//求二叉树的深度
 BTreeNode* CreateBitSortTree();									//构造二叉排序树
 
 
-
 /**************************** 线索二叉树 ***************************/
-
-typedef enum Tag
+typedef enum
 {
 	Link, //指针
 	Thread //线索
-};
+}Tag;
 
 //线索二叉树节点
 typedef struct BiThrNode
@@ -53,10 +51,22 @@ typedef struct BiThrNode
 
 
 
+/**************************** 赫夫曼树和赫夫曼编码的存储表示 ***************************/
+
+#define NS 10  //叶子结点树为 NS，总结点 2 * NS -1
+
+typedef struct  //结点
+{
+    unsigned int weight;
+    unsigned int parent, lchild, rchild;
+}HTNode;
+
+//HTNode huffmanTree[2 * NS - 1];
+
+
 
 /**************************** 树的双亲表示法 ***************************/
 
-#define MAX_TREE_SIZE 100
 typedef struct PTNode //树的结点
 {
 	TElemType data;
@@ -105,20 +115,5 @@ typedef struct CSNode  //树的结点
 	CSNode *nextSibling;
 }CSNode;
 
-
-
-
-
-/**************************** 赫夫曼树和赫夫曼编码的存储表示 ***************************/
-
-#define NS 10  //叶子结点树为 NS，总结点 2 * NS -1
-
-typedef struct  //结点
-{
-	unsigned int weight;
-	unsigned int parent, lchild, rchild;
-}HTNode;
-
-//HTNode huffmanTree[2 * NS - 1];
 
 #endif

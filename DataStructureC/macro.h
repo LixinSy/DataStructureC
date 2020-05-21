@@ -1,11 +1,11 @@
 #define  TRUE			1
 #define  FALSE			0
-#define  OK				1
-#define  ERROR			0
-#define  INFEASIBLE		-1
-#define  OVERFLOW		-2
+#define  OK				0
+#define  ERROR			-1
+#define  INFEASIBLE		-2
+#define  OVERFLOW		-3
 
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef   int  Status;
+typedef  int  Status;

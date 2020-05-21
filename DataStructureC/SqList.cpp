@@ -1,5 +1,4 @@
 
-
 #include "SqList.h"
 
 
@@ -8,7 +7,7 @@ Status InitList(SqList *L)
 {
 	L->list = (ElemType *)malloc(LIST_INIT_SIZE * sizeof(ElemType));
 	if (!(L->list))
-		exit(OVERFLOW);
+        exit(ERROR);
 	L->length = 0;
 	L->listsize = LIST_INIT_SIZE;
 	return OK;

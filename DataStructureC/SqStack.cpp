@@ -161,7 +161,6 @@ void LineEdit(){
 		if (ch != EOF)
 			ch = getchar();
 	}
-
 	DestroyStack(&s);
 }
 

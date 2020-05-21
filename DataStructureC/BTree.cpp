@@ -135,7 +135,11 @@ Status PostOrderTraverse(BTreeNode *T, Status(*visit)(TElemType))
 	return OK;
 }
 
-Status LevelorderTraverse(BTreeNode *T, Status(*visit)(TElemType)); //µÝ¹é²ã´Î±éÀú¶þ²æÊ÷
+//µÝ¹é²ã´Î±éÀú¶þ²æÊ÷
+Status LevelorderTraverse(BTreeNode *T, Status(*visit)(TElemType))
+{
+    return OK;
+}
 
 //·ÇµÝ¹éÇ°Ðò±éÀú¶þ²æÊ÷
 Status RPreOrderTraverse(BTreeNode *T, Status(*visit)(TElemType))
@@ -208,7 +212,9 @@ int Deep(BTreeNode *T)
 	if (!T)
 		return 0;
 	else{
-		n = Deep(T->lchild) > Deep(T->rchild) ? Deep(T->lchild) : Deep(T->rchild);
+        n = Deep(T->lchild);
+        if (n < Deep(T->rchild))
+            n = Deep(T->rchild);
 		return n + 1;
 	}
 }

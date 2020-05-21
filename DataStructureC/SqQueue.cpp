@@ -73,7 +73,6 @@ Status QueueTraverce(SqQueue Q, void(*visit)(ElemType))
 	int i = Q.front;
 	for (; i != Q.rear; i = (i+1) % MAX_SIZE){
 		visit(Q.base[i]);
-	}
-	printf("; %d¸öÔªËØ\n", (Q.rear - Q.front + MAX_SIZE) % MAX_SIZE);
+    }
 	return OK;
 }

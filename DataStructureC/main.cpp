@@ -1,4 +1,3 @@
-
 #include<stdio.h>
 #include <stdlib.h>
 #include "SqList.h"
@@ -10,7 +9,10 @@
 #include<string>
 #include<vector>
 #include<queue>
+#include<stack>
 #include<sstream>
+
+#include<thread>
 
 using namespace std;
 
@@ -19,39 +21,17 @@ int v(int e){
 	return OK;
 }
 
-vector<string> split(string str, char del){
-	vector<string> strs;
-	string word="";
-	bool flag = false;
-	for (int i = 0; i < str.size(); i++){
-		if (str[i] != del){
-			word.push_back(str[i]);
-			flag = true;
-		}
-		else if(str[i] == del && flag){
-			strs.push_back(word);
-			flag = false;
-			word = "";
-		}
-	}
-	if (flag){
-		strs.push_back(word);
-	}
-	return strs;
+__attribute((constructor)) void bf()
+{
+    puts(__FUNCTION__);
 }
-
-
+__attribute((destructor)) void af()
+{
+    puts(__FUNCTION__);
+}
 int main(int argc, char * argv[])
 {
-	int n;
-	
-	BTreeNode* t= CreateBitSortTree();
-
-	RPreOrderTraverse(t, v);
-
-	DestroyBitTree(t);
-	
-	system("pause");
+    puts(__FUNCTION__);
 	return 0;
 }
 

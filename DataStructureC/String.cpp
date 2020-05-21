@@ -1,7 +1,6 @@
-
 #include <iostream>
-#include <sstream>
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -9,8 +8,10 @@ using namespace std;
 int index(string s, string t, int start = 0);
 int index_normal(string s, string t, int start = 0);
 int index_kmp(string s, string t, int start = 0 );
+void get_next(string t, int next[]);
+vector<string> split(string str, char gap);
 
-void test()
+void Stringest()
 {
 	string s = "acabaabaabcacaabca";
 	string t = "abaabc";
@@ -18,8 +19,7 @@ void test()
 	//pos = index(s, t);
 	//pos = index_normal(s, t);
 	pos = index_kmp(s, t);
-	cout << s << endl << t << endl << pos << endl;
-
+    cout << s << "," << t << "," << pos << endl;
 }
 
 void get_next(string t, int next[])
@@ -116,9 +116,25 @@ int index_normal(string s, string t, int start)
 		return -1;
 }
 
-string tostr(int i)
+vector<string> split(string str, char gap)
 {
-	stringstream ss;
-	ss << i;
-	return ss.str();
+    vector<string> strs;
+    string word="";
+    bool flag = false;
+    for (int i = 0; i < str.size(); i++){
+        if (str[i] != gap){
+            word.push_back(str[i]);
+            flag = true;
+        }
+        else if(str[i] == gap && flag){
+            strs.push_back(word);
+            flag = false;
+            word = "";
+        }
+    }
+    if (flag){
+        strs.push_back(word);
+    }
+    return strs;
 }
+

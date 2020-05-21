@@ -1,58 +1,14 @@
-#include<stdio.h>
-#include<iostream>
-#include<vector>
-#include<stdlib.h>
-#define  ElemType int
-#define MAXSIZE 100
-using namespace std;
 
-typedef struct  //ÈıÔª×é
-{
-	ElemType e;
-	int i;
-	int j;
-}Triple;
+#include "Matrix.h"
 
-typedef struct  //Ñ¹Ëõ¾ØÕó
-{
-	Triple data[MAXSIZE + 1];
-	int mu, nu, tu;
-}TSMatrix;
-
-//º¯ÊıÉùÃ÷
-void scan(TSMatrix *M);   //ÊäÈëÑ¹Ëõ¾ØÕó
-void print(TSMatrix *M);   //Êä³öÑ¹Ëõ¾ØÕó
-Triple getELem(TSMatrix M, int i, int j);  //·ÃÎÊÔªËØ
-void changeElem(TSMatrix *M, int i, int j, ElemType e); //¸Ä±äÔªËØÖµ
-void TransposeTSMatrix(TSMatrix M, TSMatrix *T);	 //Ï¡Êè¾ØÕó¼òµ¥×ªÖÃ
-void FastTransposeTSMatrix(TSMatrix M, TSMatrix *T); //Ï¡Êè¾ØÕó¿ìËÙ×ªÖÃ
-
-int main()     //Ö÷º¯Êı
-{
-	TSMatrix M, T;
-	int i = 4, j = 5;
-	M.mu = 4;
-	M.nu = 5;
-	M.tu = 4;
-	scan(&M);
-	//printf("M(%d, %d) = %d\n",i, j, getELem(M,i,j).e );
-	//changeElem(&M, i, j, 22);
-	//print(&M);
-	//TransposeTSMatrix(M, &T);
-	FastTransposeTSMatrix(M, &T);
-	print(&T);
-	system("pause");
-	return 0;
-}
-
-//¶¨Òå¸÷º¯Êı
-void scan(TSMatrix *M)   ////ÊäÈëÑ¹Ëõ¾ØÕó
+//å®šä¹‰å„å‡½æ•°
+void scan(TSMatrix *M)   ////è¾“å…¥å‹ç¼©çŸ©é˜µ
 {
 	int n;
 	for (n = 1, M->tu = 0; ; n++)
 	{
 		cin>>M->data[n].e>>M->data[n].i>> M->data[n].j;
-		//ÊäÈë0 0 0±íÊ¾½áÊøÊäÈë
+		//è¾“å…¥0 0 0è¡¨ç¤ºç»“æŸè¾“å…¥
 		if (M->data[n].e == 0 && M->data[n].i == 0 && M->data[n].j == 0)
 		{
 			break;
@@ -61,7 +17,7 @@ void scan(TSMatrix *M)   ////ÊäÈëÑ¹Ëõ¾ØÕó
 	}
 }
 
-void print(TSMatrix *M)   //Êä³öÑ¹Ëõ¾ØÕó
+void print(TSMatrix *M)   //è¾“å‡ºå‹ç¼©çŸ©é˜µ
 {
 	int n;
 	for (n = 1; n <= M->tu; n++)
@@ -70,7 +26,7 @@ void print(TSMatrix *M)   //Êä³öÑ¹Ëõ¾ØÕó
 	}
 }
 
-Triple getELem(TSMatrix M, int i, int j)  ////·ÃÎÊÔªËØ
+Triple getELem(TSMatrix M, int i, int j)  ////è®¿é—®å…ƒç´ 
 {
 	Triple zero = { 0, i, j };
 	int n;
@@ -88,7 +44,7 @@ Triple getELem(TSMatrix M, int i, int j)  ////·ÃÎÊÔªËØ
 	return zero;
 }
 
-void changeElem(TSMatrix *M, int i, int j, ElemType e)	//¸Ä±äÔªËØÖµ
+void changeElem(TSMatrix *M, int i, int j, ElemType e)	//æ”¹å˜å…ƒç´ å€¼
 {
 	int n, k = 0;
 	if (i<1 || i>M->mu || j < 1 || j > M->nu)
@@ -135,7 +91,7 @@ void changeElem(TSMatrix *M, int i, int j, ElemType e)	//¸Ä±äÔªËØÖµ
 	M->data[n].j = j;
 }
 
-void TransposeTSMatrix(TSMatrix M, TSMatrix *T) //Ï¡Êè¾ØÕó¼òµ¥×ªÖÃ
+void TransposeTSMatrix(TSMatrix M, TSMatrix *T) //ç¨€ç–çŸ©é˜µç®€å•è½¬ç½®
 {
 	int p, col, q = 1;
 	if (!M.tu)
@@ -160,7 +116,7 @@ void TransposeTSMatrix(TSMatrix M, TSMatrix *T) //Ï¡Êè¾ØÕó¼òµ¥×ªÖÃ
 	}
 }
 
-void FastTransposeTSMatrix(TSMatrix M, TSMatrix *T) //Ï¡Êè¾ØÕó¿ìËÙ×ªÖÃ
+void FastTransposeTSMatrix(TSMatrix M, TSMatrix *T) //ç¨€ç–çŸ©é˜µå¿«é€Ÿè½¬ç½®
 {
 	int p, q, col;
 	vector<int>num(M.nu+1, 0);
@@ -173,11 +129,11 @@ void FastTransposeTSMatrix(TSMatrix M, TSMatrix *T) //Ï¡Êè¾ØÕó¿ìËÙ×ªÖÃ
 	T->nu = M.mu;
 	T->tu = M.tu;
 	cpot[1] = 1;
-	for (int t = 1; t <= M.tu; t++)//ÇóÃ¿ÁĞ·ÇÁãÔª¸öÊı
+	for (int t = 1; t <= M.tu; t++)//æ±‚æ¯åˆ—éé›¶å…ƒä¸ªæ•°
 	{
 		num[M.data[t].j] ++;
 	}
-	//ÇóµÚcolÁĞµÚÒ»¸ö·ÇÁãÔªÔÚT.data[]ÖĞµÄĞòºÅ
+	//æ±‚ç¬¬colåˆ—ç¬¬ä¸€ä¸ªéé›¶å…ƒåœ¨T.data[]ä¸­çš„åºå·
 	for (col = 2; col <= M.nu; col++)
 	{
 		cpot[col] = cpot[col - 1] + num[col - 1];
