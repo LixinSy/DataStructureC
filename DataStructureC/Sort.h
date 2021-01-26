@@ -6,7 +6,7 @@
 #include <iostream>
 using namespace std;
 
-///¼òµ¥²åÈëÅÅĞò£¬ÎÈ¶¨£¬Ê±¼ä¸´ÔÓ¶ÈO(n^2)£¬¿Õ¼ä¸´ÔÓ¶ÈO(1)
+///ç®€å•æ’å…¥æ’åºï¼Œç¨³å®šï¼Œæ—¶é—´å¤æ‚åº¦O(n^2)ï¼Œç©ºé—´å¤æ‚åº¦O(1)
 void InsertSort(vector<int> &vec)
 {
     int j, tmp;
@@ -24,7 +24,7 @@ void InsertSort(vector<int> &vec)
     }
 }
 
-///shellÅÅĞò£¬ ²»ÎÈ¶¨£¬Ê±¼ä¸´ÔÓ¶È²»ÄÜÈ·¶¨£¬¿Õ¼ä¸´ÔÓ¶ÈO(1)
+///shellæ’åºï¼Œ ä¸ç¨³å®šï¼Œæ—¶é—´å¤æ‚åº¦ä¸èƒ½ç¡®å®šï¼Œç©ºé—´å¤æ‚åº¦O(1)
 void Shell(vector<int> &vec, int dlta)
 {
     int j, tmp;
@@ -43,7 +43,7 @@ void Shell(vector<int> &vec, int dlta)
 }
 void ShellSort(vector<int> &vec)
 {
-    //dltasÀïµÄÖµÓ¦¸ÃÎªÖÊÊı£¬ÇÒ×îºóÒ»¸ö±ØĞëÎª1
+    //dltasé‡Œçš„å€¼åº”è¯¥ä¸ºè´¨æ•°ï¼Œä¸”æœ€åä¸€ä¸ªå¿…é¡»ä¸º1
     vector<int> dltas = {5, 3, 1};
     for (int i=0; i < dltas.size(); i++)
     {
@@ -52,13 +52,13 @@ void ShellSort(vector<int> &vec)
 }
 
 
-///¼òµ¥Ã°ÅİÅÅĞò£¬ÎÈ¶¨£¬Ê±¼ä¸´ÔÓ¶ÈO(n^2)£¬¿Õ¼ä¸´ÔÓ¶ÈO(1)
+///ç®€å•å†’æ³¡æ’åºï¼Œç¨³å®šï¼Œæ—¶é—´å¤æ‚åº¦O(n^2)ï¼Œç©ºé—´å¤æ‚åº¦O(1)
 void BubbleSort(vector<int> &vec)
 {
     int tmp;
-    for (int i=1; i <= vec.size()-1; i++) //len-1ÌËÅÅĞò
+    for (int i=1; i <= vec.size()-1; i++) //len-1è¶Ÿæ’åº
     {
-        for (int j=0; j < vec.size()-i; j++) //Ã¿ÌËlen-i´Î±È½Ï
+        for (int j=0; j < vec.size()-i; j++) //æ¯è¶Ÿlen-iæ¬¡æ¯”è¾ƒ
         {
             if (vec[j] > vec[j+1])
             {
@@ -70,7 +70,7 @@ void BubbleSort(vector<int> &vec)
     }
 }
 
-///¿ìËÙÅÅĞò£¬ ²»ÎÈ¶¨£¬Ê±¼ä¸´ÔÓ¶ÈO(nlogn)£¬¿Õ¼ä¸´ÔÓ¶ÈO(logn)
+///å¿«é€Ÿæ’åºï¼Œ ä¸ç¨³å®šï¼Œæ—¶é—´å¤æ‚åº¦O(nlogn)ï¼Œç©ºé—´å¤æ‚åº¦O(logn)
 int Partition(vector<int> &vec, int low, int high)
 {
     int pivot_key = vec[low];
@@ -83,7 +83,7 @@ int Partition(vector<int> &vec, int low, int high)
             low ++;
         vec[high] = vec[low];
     }
-    //×îÖÕ low == high
+    //æœ€ç»ˆ low == high
     vec[low] = pivot_key;
     return low;
 }
@@ -91,7 +91,7 @@ void QSort(vector<int> &vec, int low, int high)
 {
     if (low < high)
     {
-        //Ö´ĞĞÒ»´ÎPartition£¬pivot_keyµÄÎ»ÖÃ±ãÈ·¶¨ÔÚpivot_loc
+        //æ‰§è¡Œä¸€æ¬¡Partitionï¼Œpivot_keyçš„ä½ç½®ä¾¿ç¡®å®šåœ¨pivot_loc
         int pivot_loc = Partition(vec, low, high);
         QSort(vec, low, pivot_loc-1);
         QSort(vec, pivot_loc+1, high);
@@ -103,13 +103,13 @@ void QuickSort(vector<int> &vec)
 }
 
 
-///¼òµ¥Ñ¡ÔñÅÅĞò£¬²»ÎÈ¶¨£¬Ê±¼ä¸´ÔÓ¶ÈO(n^2)£¬¿Õ¼ä¸´ÔÓ¶ÈO(1)
+///ç®€å•é€‰æ‹©æ’åºï¼Œä¸ç¨³å®šï¼Œæ—¶é—´å¤æ‚åº¦O(n^2)ï¼Œç©ºé—´å¤æ‚åº¦O(1)
 void SelectSort(vector<int> &vec)
 {
     int tmp, k;
     for (int i = 0; i < vec.size()-1; i++)
     {
-        k = i;//k Îª×îĞ¡ÖµµÄindex
+        k = i;//k ä¸ºæœ€å°å€¼çš„index
         for (int j=i+1; j<vec.size(); j++)
         {
             if (vec[j] < vec[k])
@@ -126,10 +126,10 @@ void SelectSort(vector<int> &vec)
     }
 }
 
-///¶ÑÅÅĞò£¬ ²»ÎÈ¶¨£¬Ê±¼ä¸´ÔÓ¶ÈO(nlogn)£¬¿Õ¼ä¸´ÔÓ¶ÈO(1)
-/// 1¡¢ÓÃË³Ğò±í±íÊ¾ÍêÈ«¶ş²æÊ÷
-/// 2¡¢´Ó n / 2¸ö½Úµã¿ªÊ¼Adjust
-/// 3¡¢heapµÄindex´Ó 1 ¿ªÊ¼, heap[0]¿ÉÒÔµ±×÷tmp
+///å †æ’åºï¼Œ ä¸ç¨³å®šï¼Œæ—¶é—´å¤æ‚åº¦O(nlogn)ï¼Œç©ºé—´å¤æ‚åº¦O(1)
+/// 1ã€ç”¨é¡ºåºè¡¨è¡¨ç¤ºå®Œå…¨äºŒå‰æ ‘
+/// 2ã€ä» n / 2ä¸ªèŠ‚ç‚¹å¼€å§‹Adjust
+/// 3ã€heapçš„indexä» 1 å¼€å§‹, heap[0]å¯ä»¥å½“ä½œtmp
 void HeapAdjust(vector<int>& heap, int parent_index, int last_index)
 {
     heap[0] = heap[parent_index];
@@ -146,8 +146,10 @@ void HeapAdjust(vector<int>& heap, int parent_index, int last_index)
     }
     heap[parent_index] = heap[0];
 }
-void HeapSort(vector<int>& heap)
+void HeapSort(vector<int>& vec)
 {
+    vector<int> heap = {0};
+    heap.insert(heap.end(), vec.begin(), vec.end());
     for (int i= (heap.size()-1)/2; i > 0; i--)
     {
         HeapAdjust(heap, i, heap.size()-1);
@@ -159,10 +161,11 @@ void HeapSort(vector<int>& heap)
         heap[i] = heap[0];
         HeapAdjust(heap, 1, i-1);
     }
+    vec.assign(heap.begin()+1, heap.end());
 }
 
 
-///¹é²¢ÅÅĞò£¬ ÎÈ¶¨£¬Ê±¼ä¸´ÔÓ¶ÈO(nlogn)£¬¿Õ¼ä¸´ÔÓ¶ÈO(n)
+///å½’å¹¶æ’åºï¼Œ ç¨³å®šï¼Œæ—¶é—´å¤æ‚åº¦O(nlogn)ï¼Œç©ºé—´å¤æ‚åº¦O(n)
 void Merge(vector<int> &src, vector<int> &dst, int start, int mid, int last)
 {
     int li = start, ri = mid+1, j = start;
@@ -191,7 +194,7 @@ void Merge(vector<int> &src, vector<int> &dst, int start, int mid, int last)
 void MSort(vector<int> &src, vector<int> &dst, int start, int last)
 {
     if (start == last)
-    {   //±ß½çÌõ¼ş
+    {   //è¾¹ç•Œæ¡ä»¶
         //dst[start] = src[start];
         return;
     }
@@ -212,9 +215,9 @@ void MergeSort(vector<int> &vec)
 }
 
 
-/// »ùÊıÅÅĞò£¬ ÎÈ¶¨£¬Ê±¼ä¸´ÔÓ¶ÈO(d(n+r))£¬¿Õ¼ä¸´ÔÓ¶ÈO(r)
-/// Êı×ÖÅÅĞòÖĞ£ºr=10, d=×î´óÊı×ÖÎ»Êı£¬n=ÔªËØ¸öÊı
-/// Ò»ÌË·ÖÅäO(n)£¬Ò»ÌËÊÕ¼¯O(r)£¬½øĞĞdÌË·ÖÅäºÍÊÕ¼¯£¬ÔòÊ±¼ä¸´ÔÓ¶ÈÎªO(d(n+r))
+/// åŸºæ•°æ’åºï¼Œ ç¨³å®šï¼Œæ—¶é—´å¤æ‚åº¦O(d(n+r))ï¼Œç©ºé—´å¤æ‚åº¦O(r)
+/// æ•°å­—æ’åºä¸­ï¼šr=10, d=æœ€å¤§æ•°å­—ä½æ•°ï¼Œn=å…ƒç´ ä¸ªæ•°
+/// ä¸€è¶Ÿåˆ†é…O(n)ï¼Œä¸€è¶Ÿæ”¶é›†O(r)ï¼Œè¿›è¡Œdè¶Ÿåˆ†é…å’Œæ”¶é›†ï¼Œåˆ™æ—¶é—´å¤æ‚åº¦ä¸ºO(d(n+r))
 void RadixSort()
 {
 
