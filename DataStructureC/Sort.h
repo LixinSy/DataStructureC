@@ -71,6 +71,7 @@ void BubbleSort(vector<int> &vec)
 }
 
 ///快速排序， 不稳定，时间复杂度O(nlogn)，空间复杂度O(logn)
+/// 1、每次Partition便确定一个数pivot_key的位置，且pivot_key都大于左边的数，都小于右边的数
 int Partition(vector<int> &vec, int low, int high)
 {
     int pivot_key = vec[low];
@@ -128,10 +129,11 @@ void SelectSort(vector<int> &vec)
 
 ///堆排序， 不稳定，时间复杂度O(nlogn)，空间复杂度O(1)
 /// 1、用顺序表表示完全二叉树
-/// 2、从 n / 2个节点开始Adjust
+/// 2、从 n / 2个节点开始Adjust，最后一个节点的父节点
 /// 3、heap的index从 1 开始, heap[0]可以当作tmp
 void HeapAdjust(vector<int>& heap, int parent_index, int last_index)
 {
+    //HeapAdjust方向是从上往下
     heap[0] = heap[parent_index];
     int index = 2*parent_index;
     for (; index <= last_index; index = 2*index)
@@ -148,6 +150,7 @@ void HeapAdjust(vector<int>& heap, int parent_index, int last_index)
 }
 void HeapSort(vector<int>& vec)
 {
+    //构建大（小）顶堆方向从下往上
     vector<int> heap = {0};
     heap.insert(heap.end(), vec.begin(), vec.end());
     for (int i= (heap.size()-1)/2; i > 0; i--)
