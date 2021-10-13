@@ -15,7 +15,7 @@ void InsertSort(vector<int> &vec)
         if (vec[i] < vec[i-1])
         {
             tmp = vec[i];
-            for (j = i-1; j < vec.size() && tmp < vec[j]; j -= 1)
+            for (j = i-1; j < vec.size() && j >= 0 && tmp < vec[j]; j -= 1)
             {
                 vec[j+1] = vec[j];
             }
